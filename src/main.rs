@@ -15,16 +15,21 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let socket_path = "/run/container-management/container-management.sock";
 
     let channel = Endpoint::try_from("lttp://[::]:50051")?
-        .connect_with_connector(service_fn(move |_: Uri| {
-            // Connect to a Uds socket
-            UnixStream::connect(socket_path)
-        }))
+        .connect_with_connector(service_fn(move |_: Uri| UnixStream::connect(socket_path)))
         .await?;
 
+    // List all containers
     let mut client = kanto::containers_client::ContainersClient::new(channel);
     let request = tonic::Request::new(kanto::ListContainersRequest {});
     let response = client.list(request).await?;
+    println!("RESPONSE={:?}", response);
 
+    // Search for specific container
+    let container_lookup_name = String::from("test");
+    let request = tonic::Request::new(kanto::GetContainerRequest {
+        id: container_lookup_name,
+    });
+    let response = client.get(request).await?;
     println!("RESPONSE={:?}", response);
     Ok(())
 }
