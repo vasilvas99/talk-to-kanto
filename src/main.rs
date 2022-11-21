@@ -13,8 +13,8 @@ use containers::github::com::eclipse_kanto::container_management::containerm::ap
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let socket_path = "/run/container-management/container-management.sock";
-
-    let channel = Endpoint::try_from("lttp://[::]:50051")?
+    //The uri is ignored and a UDS connection is established instead.
+    let channel = Endpoint::try_from("http://[::]:50051")?
         .connect_with_connector(service_fn(move |_: Uri| UnixStream::connect(socket_path)))
         .await?;
 
@@ -31,5 +31,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     });
     let response = client.get(request).await?;
     println!("RESPONSE={:?}", response);
+    
     Ok(())
 }
