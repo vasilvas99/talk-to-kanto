@@ -1,4 +1,3 @@
-use std::convert::TryFrom;
 #[cfg(unix)]
 use tokio::net::UnixStream;
 use tonic::transport::{Endpoint, Uri};
@@ -22,7 +21,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
        UnixStream::connect(socket_path)
    }))
    .await?;
-
 
     let mut client  = kanto::containers_client::ContainersClient::new(channel);
     let request = tonic::Request::new(kanto::ListContainersRequest{});
