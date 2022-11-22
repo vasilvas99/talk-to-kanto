@@ -24,13 +24,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let response = client.list(request).await?;
     println!("RESPONSE={:?}", response);
 
-    // Search for specific container
+    // Search for specific container, serving as an example how to use the serde json ser-deserialization
     let container_lookup_name = String::from("test");
     let request = tonic::Request::new(kanto::GetContainerRequest {
         id: container_lookup_name,
     });
-    let response = client.get(request).await?;
-    println!("RESPONSE={:?}", response);
+    // Consume the response object and return the message
+    let response = client.get(request).await?.into_inner();
+    // print out the json
+    println!("Last response as json: {}", serde_json::to_string(&response)?);
     
     Ok(())
 }
