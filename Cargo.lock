@@ -193,6 +193,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "glob"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9b919933a397b79c37e33b77bb2aa3dc8eb6e165ad809e58ff75bc7db2e34574"
+
+[[package]]
 name = "h2"
 version = "0.3.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -692,6 +698,7 @@ checksum = "20518fe4a4c9acf048008599e464deb21beeae3d3578418951a189c235a7a9a8"
 name = "talk-to-kanto"
 version = "0.1.0"
 dependencies = [
+ "glob",
  "http",
  "hyper",
  "prost",
