@@ -1,12 +1,12 @@
 {
-    "id": "a0252c50-5998-4270-9413-1df2a9209826",
+    "id": "",
     "name": "databroker",
     "image": {
         "name": "ghcr.io/eclipse/kuksa.val/databroker:0.2.5",
         "decrypt_config": null
     },
-    "host_name": "databroker-host",
-    "domain_name": "databroker-domain",
+    "host_name": "",
+    "domain_name": "",
     "resolv_conf_path": "",
     "hosts_path": "",
     "hostname_path": "",
@@ -59,10 +59,10 @@
         "restarting": false,
         "paused": false,
         "running": false,
-        "status": "Created",
+        "status": "",
         "oom_killed": false
     },
-    "created": "2022-11-21T13:16:19.883149266Z",
+    "created": "",
     "manually_stopped": false,
     "restart_count": 0
 }

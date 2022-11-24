@@ -1,4 +1,3 @@
-//use serde_json::to_string;
 #[cfg(unix)]
 use tokio::net::UnixStream;
 use tonic::transport::{Endpoint, Uri};
@@ -29,15 +28,19 @@ async fn start(_client: &mut kanto::containers_client::ContainersClient<tonic::t
 async fn create(_client: &mut kanto::containers_client::ContainersClient<tonic::transport::Channel>, file_path: &String) -> Result<(), Box<dyn std::error::Error>> {
 
 	println!("From file {}", file_path);
-    let container = fs::read_to_string(file_path)
+    let container_str = fs::read_to_string(file_path)
         .expect("Should have been able to read the file");
-	let c: kanto_cnt::Container = serde_json::from_str(&container)?;
-	let id = String::from(c.id.clone());
-	let name = String::from(c.name.clone());
+	let container: kanto_cnt::Container = serde_json::from_str(&container_str)?;
+	let name = String::from(container.name.clone());
 	println!("Creating [{}]", name);
-    let request = tonic::Request::new(kanto::CreateContainerRequest{container: Some(c)});
-	let _response  = _client.create(request).await?;
+    let request = tonic::Request::new(kanto::CreateContainerRequest{container: Some(container)});
+	let _response = _client.create(request).await?;
     println!("Created [{}]", name);
+    let _none = String::new();
+    let id = match _response.into_inner().container {
+        Some(c) => c.id,
+        None => _none
+    };
     start(_client, &name, &id).await?;
     Ok(())	
 }

@@ -1,5 +1,5 @@
 [package]
-name = "talk-to-kanto"
+name = "kanto-cm-start"
 version = "0.1.0"
 edition = "2021"
 
