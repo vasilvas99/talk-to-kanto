@@ -1,5 +1,5 @@
 [package]
-name = "kanto-cm-start"
+name = "kanto-auto-deployer"
 version = "0.1.0"
 edition = "2021"
 
